@@ -1,0 +1,28 @@
+{
+  "name": "reactforum",
+  "version": "1.0.0",
+  "description": "simple webforum in react and typescript",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel serve ./src/index.html",
+    "build": "parcel build ./src/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noopnoop/reactForum.git"
+  },
+  "author": "noops",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noopnoop/reactForum/issues"
+  },
+  "homepage": "https://github.com/noopnoop/reactForum#readme",
+  "devDependencies": {
+    "parcel": "next"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  }
+}
