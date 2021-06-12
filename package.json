@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/noopnoop/reactForum#readme",
   "devDependencies": {
+    "eslint": "^7.28.0",
+    "eslint-plugin-react": "^7.24.0",
     "parcel": "next"
   },
   "dependencies": {
