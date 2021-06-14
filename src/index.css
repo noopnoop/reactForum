@@ -1,0 +1,33 @@
+body {
+  background-color: #2A2F38;
+}
+
+#appContainer {
+  margin: auto;
+  width: 50%;
+  background-color: #EEEEEE;
+}
+
+.threadEntry {
+  padding: 4px;
+  font-family: Helvetica, sans-serif;
+  font-size: 16px;
+  background-color: gainsboro;
+  text-align: left;
+}
+
+.threadName {
+  background-color: gainsboro;
+  float: left;
+}
+
+.threadReplyCount {
+  float: right;
+  background-color: gainsboro;
+}
+
+.threadEntry::after {
+  content: "";
+  clear: both;
+  display: table;
+}
