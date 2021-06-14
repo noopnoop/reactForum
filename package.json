@@ -5,6 +5,7 @@
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit",
     "start": "parcel serve ./src/index.html",
     "build": "parcel build ./src/index.html"
   },
@@ -19,9 +20,14 @@
   },
   "homepage": "https://github.com/noopnoop/reactForum#readme",
   "devDependencies": {
+    "@parcel/transformer-typescript-tsc": "^2.0.0-nightly.721",
+    "@parcel/validator-eslint": "^2.0.0-alpha.3",
+    "@types/react": "^17.0.11",
+    "@types/react-dom": "^17.0.7",
     "eslint": "^7.28.0",
     "eslint-plugin-react": "^7.24.0",
-    "parcel": "next"
+    "parcel": "next",
+    "typescript": "^4.3.2"
   },
   "dependencies": {
     "react": "^17.0.2",
