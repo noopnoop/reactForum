@@ -8,9 +8,27 @@ h1 {
   color: #EEEEEE;
 }
 
-#appContainer {
+#threadsContainer {
+  visibility: hidden;
   margin: auto;
   width: 60%;
+}
+
+#topicContainer {
+  margin: auto;
+  width: 60%;
+  font-family: Helvetica, sans-serif;
+}
+
+#topicTitle {
+  background-color: gray;
+  font-size: 24px;
+  text-align: center;
+}
+
+.messageContainer {
+  padding: 4px;
+  background-color: gainsboro;
 }
 
 .threadEntry {

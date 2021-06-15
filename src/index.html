@@ -7,7 +7,7 @@
 
   <body>
     <div id="root"></div>
-    <div id="appContainer">
+    <div id="threadsContainer">
       <div id = "threadKey" >
         <p id = "nameKey"> Thread Name </p>
         <p id = "replyKey"> Reply Count </p>
@@ -15,16 +15,32 @@
       <div class= "threadEntry" > 
         <p class = "threadName"> i have too many bogus bucks </p> 
         <p class = "threadReplyCount"> 2 </p>
-     </div>
+      </div>
       <div class= "threadEntry" > 
         <p class = "threadName"> i want less bogus bucks</p> 
         <p class = "threadReplyCount"> 1 </p>
-     </div>
-     <div id = "pageControl">
+      </div>
+      <div id = "pageControl">
         <button type = "button" id="pageBack">←</button>
         <p id = "pageNumber">1</p>
         <button type = "button" id = "pageForward">→</button>
+      </div>
+    </div>
+    <div id="topicContainer">
+      <div id = "topicTitle">i want less bogus bucks</div>
+      <div class = "messageContainer">
+        <p class = "messageContent">please?</p>
+      </div>
     </div>
     <script type="module" src="./index.tsx"></script>
+    <script type="application/javascript">
+      let threadMode = true;
+      const testButton = document.getElementById('pageBack');
+      const appContainer = document.getElementById('appContainer');
+      testButton.addEventListener('click', () => {
+        threadMode = !threadMode;
+        appContainer.style.visibility = 'hidden';
+      });
+    </script>
   </body>
 </html>
