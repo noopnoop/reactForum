@@ -2,10 +2,15 @@ body {
   background-color: #2A2F38;
 }
 
+h1 {
+  font-family: Helvetica, sans-serif;
+  font-size: 56px;
+  color: #EEEEEE;
+}
+
 #appContainer {
   margin: auto;
-  width: 50%;
-  background-color: #EEEEEE;
+  width: 60%;
 }
 
 .threadEntry {
@@ -17,17 +22,61 @@ body {
 }
 
 .threadName {
-  background-color: gainsboro;
   float: left;
 }
 
 .threadReplyCount {
   float: right;
-  background-color: gainsboro;
 }
 
 .threadEntry::after {
   content: "";
   clear: both;
   display: table;
+}
+
+#threadKey {
+  margin: auto;
+  padding: 5px;
+  font-family: Helvetica, sans-serif;
+  font-size: 20px;
+  background-color: gainsboro;
+  text-align: left;
+}
+
+#nameKey {
+  float: left;
+  width: 75%;
+}
+
+#replyKey {
+  float: right;
+}
+
+.threadKey::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+#pageControl {
+  width: 75px;
+  margin:auto;
+  padding: 12px;
+  font-family: Helvetica, sans-serif;
+  font-size: 20px;
+}
+
+#pageBack {
+  float: left;
+}
+
+#pageForward {
+  float:left;
+}
+
+#pageNumber {
+  color: #EEEEEE;
+  margin: 0;
+  float:left;
 }

@@ -1,5 +1,6 @@
 <html>
   <head>
+    <meta charset="utf8">
     <title>reactForum</title>
     <link rel="stylesheet" type="text/css" href="./index.css">
   </head>
@@ -7,6 +8,10 @@
   <body>
     <div id="root"></div>
     <div id="appContainer">
+      <div id = "threadKey" >
+        <p id = "nameKey"> Thread Name </p>
+        <p id = "replyKey"> Reply Count </p>
+      </div>
       <div class= "threadEntry" > 
         <p class = "threadName"> i have too many bogus bucks </p> 
         <p class = "threadReplyCount"> 2 </p>
@@ -15,6 +20,10 @@
         <p class = "threadName"> i want less bogus bucks</p> 
         <p class = "threadReplyCount"> 1 </p>
      </div>
+     <div id = "pageControl">
+        <button type = "button" id="pageBack">←</button>
+        <p id = "pageNumber">1</p>
+        <button type = "button" id = "pageForward">→</button>
     </div>
     <script type="module" src="./index.tsx"></script>
   </body>
