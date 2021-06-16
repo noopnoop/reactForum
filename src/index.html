@@ -38,16 +38,13 @@
         <div class = "messageAuthor">SmallMan22</div>
         <p class = "messageContent">sorry many i already have too many bogus bucks</p>
       </div>
+      <div id = "inputContainer">
+        <div id = "usernameContainer">
+          <input type ="text" id="nameEntry" value="Username"></input>
+          <input type ="text" id="messageEntry" value="Enter your message here."></input>
+          <input type ="button" id="messageSubmit" value="Submit"</input>
+        </div>
     </div>
     <script type="module" src="./index.tsx"></script>
-    <script type="application/javascript">
-      let threadMode = true;
-      const testButton = document.getElementById('pageBack');
-      const appContainer = document.getElementById('appContainer');
-      testButton.addEventListener('click', () => {
-        threadMode = !threadMode;
-        appContainer.style.visibility = 'hidden';
-      });
-    </script>
   </body>
 </html>
