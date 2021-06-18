@@ -4,6 +4,10 @@ module.exports = {
       'version': 'detect'
     }
   },
+  'parser': '@typescript-eslint/parser',
+  'plugins': [
+    '@typescript-eslint'
+  ],
   'env': {
     'browser': true,
     'commonjs': true,
@@ -13,6 +17,7 @@ module.exports = {
   },
   'extends': [
     'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended'
   ],
   'parserOptions': {
