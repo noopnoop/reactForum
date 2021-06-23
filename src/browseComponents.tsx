@@ -2,16 +2,39 @@ import * as React from 'react';
 import { Dispatch, SetStateAction } from 'react';
 import { Thread } from './types';
 
+interface ThreadsContainerProps {
+  threads : Thread[];
+  newThread : Dispatch<SetStateAction<number | null>>;
+}
+export function ThreadsContainer (props : ThreadsContainerProps) : JSX.Element {
+  return (
+    <div id="threadsContainer">
+      <ThreadKey/>
+      <ThreadList threads={props.threads} newThread={props.newThread}/>
+      <PageControl/>
+    </div>
+  );
+}
+
+function ThreadKey () : JSX.Element {
+  return (
+    <div id = "threadKey">
+      <p id = "nameKey">Thread Name</p>
+      <p id = "replyKey">Reply Count</p>
+    </div>
+  );
+}
 interface ThreadListProps {
   threads : Thread[];
   newThread : Dispatch<SetStateAction<number | null>>;
 }
-export function ThreadList(props: ThreadListProps) : JSX.Element {
+function ThreadList(props: ThreadListProps) : JSX.Element {
 
   const list = props.threads.map((thread, index) => {
     return (
       <ThreadEntry
         thread={thread}
+        changeThread={() => props.newThread(index)}
         key={index}
       />
     );
@@ -26,13 +49,17 @@ export function ThreadList(props: ThreadListProps) : JSX.Element {
 
 interface ThreadEntryProps {
   thread : Thread;
+  changeThread : () => void;
 }
-export function ThreadEntry(props: ThreadEntryProps) : JSX.Element {
+function ThreadEntry(props: ThreadEntryProps) : JSX.Element {
 
   return (
     <div className="threadEntry">
-      <p className ="threadName">{props.thread.title}</p>
-      <p className ="threadReplyCount">{props.thread.replies.length}</p>
+      <p className ="threadName"
+        onClick={props.changeThread}>
+        {props.thread.title}
+      </p>
+      <p className ="threadReplyCount">{props.thread.replies.length-1}</p>
     </div>
   );
 
