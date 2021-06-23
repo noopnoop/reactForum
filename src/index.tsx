@@ -1,104 +1,62 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { render } from 'react-dom';
+import type { Thread, Message } from './types';
+import { ThreadList, PageControl } from './browseComponents';
 
-
-interface Message {
-  author: string;
-  content: string;
-}
-
-interface Thread {
-  title: string;
-  replies: Message[];
-}
-
-interface Page {
-  threads: Thread[];
-  num: number;
-}
-
-const testPage : Page = {
-  threads: [
+const testPage : Thread[] =
+  [
     {
-      title: 'down with bogus buchs',
+      title : 'down with bogus buchs',
       replies : [
         {
-          author: 'swag',
-          content: 'i am so sick of freaking bogus buchs'
+          author : 'swag',
+          content : 'i am so sick of freaking bogus buchs'
         },
         {
-          author: 'swag2',
-          content: 'me too bro'
+          author : 'swag2',
+          content : 'me too bro'
         }
       ]
     },
     {
-      title: 'i kind of like bogus bucks actually',
+      title : 'i kind of like bogus bucks actually',
       replies : [
         {
-          author: 'joeBiden',
-          content: 'you know what i mean haha',
+          author : 'joeBiden',
+          content : 'you know what i mean haha',
         }
       ]
-    }],
-  num: 1
-};
+    }
+  ];
 
-function App(props: Page){
-  const mode = 'thread'; //browse: look at different threads, thread: look at a thread
-  const currentThread = 0;
+interface AppProps {
+  threads : Thread[]
+}
+function App(props: AppProps){
+  const [currentThread, newThread] = useState<number | null>(null);
+  const [site, updateSite] = useState<Thread[]>(props.threads);
 
-  if (mode === 'browse'){
+  if (currentThread === null) {
     return (
       <div id="threadsContainer">
         <div id = "threadKey">
           <p id = "nameKey">Thread Name</p>
           <p id = "replyKey">Reply Count</p>
         </div>
-        <ThreadList num={props.num} threads={props.threads}/>
-        <PageControl num = {props.num} threads={props.threads}/>
+        <ThreadList threads={site} newThread={newThread}/>
+        <PageControl/>
       </div>
     );
   } else {
     return (
       <TopicContainer
-        title = {props.threads[currentThread].title}
-        replies = {props.threads[currentThread].replies}
+        title = {props.threads[currentThread!].title}
+        replies = {props.threads[currentThread!].replies}
       />
     );
   }
 
-}
-
-function ThreadList(props: Page){
-
-  const list = props.threads.map((thread, index) => {
-    return (
-      <ThreadEntry title={thread.title}
-        replies={thread.replies}
-        key={index}
-      />);
-  });
-
-  return list;
-}
-
-function ThreadEntry(props: Thread){
-
-  return (<div className="threadEntry">
-    <p className ="threadName">{props.title}</p>
-    <p className ="threadReplyCount">{props.replies.length}</p>
-  </div>);
-
-}
-
-function PageControl(props: Page) {
-  return (
-    <div id="pageControl">
-      <button type="button" id="pageBack">←</button>
-      <p id="pageNumber">{props.num}</p>
-      <button type="button" id="pageForward">→</button>
-    </div> );
 }
 
 function TopicContainer(props: Thread) {
@@ -125,7 +83,11 @@ function MessageList(props: Thread){
     <MessageContainer author={msg.author} content={msg.content} key={i}/>
   );
 
-  return list;
+  return (
+    <div>
+      {list}
+    </div>
+  );
 }
 
 function MessageContainer(props: Message) {
@@ -149,9 +111,11 @@ function InputContainer() {
 
 function Test() {
   return (
-    <h1> Howdy </h1>
+    <h1>Howdy</h1>
   );
 }
 
-render (<App threads={testPage.threads} num={testPage.num}/>,
-  document.getElementById('root'));
+render(
+  <App threads={testPage}/>,
+  document.getElementById('root')
+);
