@@ -1,18 +1,24 @@
 import * as React from 'react';
-import { Thread, Message } from './types';
+import type { Thread, Message } from './types';
+import { Dispatch, SetStateAction } from 'react';
 
 interface TopicContainerProps {
-  thread : Thread;
-  goBack : () => void;
+  currentThread : number | null;
+  newThread : Dispatch<SetStateAction<number | null>>;
+  site : Thread[];
+  updateSite : Dispatch<SetStateAction<Thread[]>>;
 }
 export function TopicContainer(props: TopicContainerProps) : JSX.Element {
+
+  const thread = props.site[props.currentThread!];
+
   return (
     <div id="topicContainer">
       <TitleContainer
-        title={props.thread.title}
-        goBack={props.goBack}
+        title={thread.title}
+        newThread={props.newThread}
       />
-      <MessageList messages={props.thread.replies}/>
+      <MessageList messages={thread.replies}/>
       <InputContainer />
     </div>
   );
@@ -20,12 +26,17 @@ export function TopicContainer(props: TopicContainerProps) : JSX.Element {
 
 interface TitleContainerProps {
   title : string;
-  goBack : () => void;
+  newThread : Dispatch<SetStateAction<number | null>>;
 }
 function TitleContainer(props: TitleContainerProps){
+
+  function goBack () {
+    props.newThread(null);
+  }
+
   return(
     <div id="titleContainer">
-      <div id="backButton" onClick={props.goBack}>←</div>
+      <div id="backButton" onClick={goBack}>←</div>
       <div id="topicTitle">{props.title}</div>
     </div>
   );
@@ -36,7 +47,7 @@ interface MessageListProps {
 }
 function MessageList(props: MessageListProps){
   const list = props.messages.map((msg : Message, i : number) =>
-    <MessageContainer author={msg.author} content={msg.content} key={i}/>
+    <MessageContainer message={msg} key={i}/>
   );
 
   return (
@@ -46,11 +57,14 @@ function MessageList(props: MessageListProps){
   );
 }
 
-function MessageContainer(props: Message) {
+interface MessageContainerProps {
+  message : Message;
+}
+function MessageContainer(props: MessageContainerProps) {
   return (
     <div className="messageContainer">
-      <div className="messageAuthor">{props.author}</div>
-      <div className="messageContent">{props.content}</div>
+      <div className="messageAuthor">{props.message.author}</div>
+      <div className="messageContent">{props.message.content}</div>
     </div>
   );
 }

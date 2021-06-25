@@ -48,8 +48,10 @@ function App(props: AppProps){
   } else {
     return (
       <TopicContainer
-        thread = {props.threads[currentThread!]}
-        goBack = {() => newThread(null)}
+        currentThread = {currentThread}
+        newThread = {newThread}
+        site = {site}
+        updateSite = {updateSite}
       />
     );
   }
