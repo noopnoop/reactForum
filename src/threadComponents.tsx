@@ -1,6 +1,11 @@
 import * as React from 'react';
 import type { Thread, Message } from './types';
-import { Dispatch, SetStateAction } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useState,
+  ChangeEvent
+} from 'react';
 
 interface TopicContainerProps {
   currentThread : number | null;
@@ -19,7 +24,12 @@ export function TopicContainer(props: TopicContainerProps) : JSX.Element {
         newThread={props.newThread}
       />
       <MessageList messages={thread.replies}/>
-      <InputContainer />
+      <InputContainer
+        currentThread={props.currentThread}
+        newThread={props.newThread}
+        site={props.site}
+        updateSite={props.updateSite}
+      />
     </div>
   );
 }
@@ -69,12 +79,61 @@ function MessageContainer(props: MessageContainerProps) {
   );
 }
 
-function InputContainer() {
+interface InputContainerProps {
+  currentThread : number | null;
+  newThread : Dispatch<SetStateAction<number | null>>;
+  site : Thread[];
+  updateSite : Dispatch<SetStateAction<Thread[]>>;
+}
+function InputContainer(props : InputContainerProps) {
+
+  const [messageInput, setMessageInput] =
+    useState<string>('Enter your message here.');
+  const [nameInput, setNameInput] = useState<string>('Username');
+
+  function handleMessageChange (e : ChangeEvent<HTMLTextAreaElement>) {
+    setMessageInput(e.target.value);
+  }
+
+  function handleNameChange (e : ChangeEvent<HTMLInputElement>) {
+    setNameInput(e.target.value);
+  }
+
+  function handleSubmit () {
+    const threadCopy = {
+      title : props.site[props.currentThread!].title,
+      replies : [...props.site[props.currentThread!].replies]
+    };
+    const siteCopy = [...props.site];
+
+    const newMessage = {
+      author : nameInput,
+      content : messageInput
+    };
+
+    threadCopy.replies.push(newMessage);
+    siteCopy.splice(props.currentThread!, 1);
+    siteCopy.unshift(threadCopy);
+    props.updateSite(siteCopy);
+    props.newThread(0);
+  }
+
   return (
     <div id="inputContainer">
-      <input type="text" id="nameEntry" value="Username"></input>
-      <textarea id="messageEntry">Enter your message here.</textarea>
-      <input type="button" id="messageSubmit" value="Submit"></input>
+      <input type="text"
+        onChange={handleNameChange}
+        id="nameEntry"
+        value="Username">
+      </input>
+      <textarea id="messageEntry"
+        onChange={handleMessageChange}>
+        Enter your message here.
+      </textarea>
+      <input type="button"
+        id="messageSubmit"
+        value="Submit"
+        onClick={handleSubmit}>
+      </input>
     </div>
   );
 }
