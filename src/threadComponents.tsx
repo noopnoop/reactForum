@@ -7,25 +7,26 @@ import {
 import { InputContainer } from './inputComponents';
 
 interface TopicContainerProps {
-  currentThread : number | null;
-  newThread : Dispatch<SetStateAction<number | null>>;
+  currentThread : number;
+  updateThread : Dispatch<SetStateAction<number>>;
   site : Thread[];
   updateSite : Dispatch<SetStateAction<Thread[]>>;
+  updateViewingThread : Dispatch<SetStateAction<boolean>>;
 }
-export function TopicContainer(props: TopicContainerProps) : JSX.Element {
+export function TopicContainer (props: TopicContainerProps) : JSX.Element {
 
-  const thread = props.site[props.currentThread!];
+  const thread = props.site[props.currentThread];
 
   return (
     <div id="topicContainer">
       <TitleContainer
         title={thread.title}
-        newThread={props.newThread}
+        updateViewingThread={props.updateViewingThread}
       />
       <MessageList messages={thread.replies}/>
       <InputContainer
         currentThread={props.currentThread}
-        newThread={props.newThread}
+        updateThread={props.updateThread}
         site={props.site}
         updateSite={props.updateSite}
       />
@@ -35,12 +36,12 @@ export function TopicContainer(props: TopicContainerProps) : JSX.Element {
 
 interface TitleContainerProps {
   title : string;
-  newThread : Dispatch<SetStateAction<number | null>>;
+  updateViewingThread : Dispatch<SetStateAction<boolean>>;
 }
-function TitleContainer(props: TitleContainerProps){
+function TitleContainer (props: TitleContainerProps){
 
   function goBack () {
-    props.newThread(null);
+    props.updateViewingThread(false);
   }
 
   return(
@@ -54,7 +55,7 @@ function TitleContainer(props: TitleContainerProps){
 interface MessageListProps {
   messages: Message[];
 }
-function MessageList(props: MessageListProps){
+function MessageList (props: MessageListProps){
   const list = props.messages.map((msg : Message, i : number) =>
     <MessageContainer message={msg} key={i}/>
   );
@@ -69,7 +70,7 @@ function MessageList(props: MessageListProps){
 interface MessageContainerProps {
   message : Message;
 }
-function MessageContainer(props: MessageContainerProps) {
+function MessageContainer (props: MessageContainerProps) {
   return (
     <div className="messageContainer">
       <div className="messageAuthor">{props.message.author}</div>

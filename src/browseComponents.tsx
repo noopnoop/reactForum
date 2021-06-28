@@ -4,13 +4,18 @@ import { Thread } from './types';
 
 interface ThreadsContainerProps {
   threads : Thread[];
-  newThread : Dispatch<SetStateAction<number | null>>;
+  updateThread : Dispatch<SetStateAction<number>>;
+  updateViewingThread : Dispatch<SetStateAction<boolean>>;
 }
 export function ThreadsContainer (props : ThreadsContainerProps) : JSX.Element {
   return (
     <div id="threadsContainer">
       <ThreadKey/>
-      <ThreadList threads={props.threads} newThread={props.newThread}/>
+      <ThreadList
+        threads={props.threads}
+        updateThread={props.updateThread}
+        updateViewingThread={props.updateViewingThread}
+      />
       <PageControl/>
     </div>
   );
@@ -26,15 +31,21 @@ function ThreadKey () : JSX.Element {
 }
 interface ThreadListProps {
   threads : Thread[];
-  newThread : Dispatch<SetStateAction<number | null>>;
+  updateThread : Dispatch<SetStateAction<number>>;
+  updateViewingThread : Dispatch<SetStateAction<boolean>>;
 }
-function ThreadList(props: ThreadListProps) : JSX.Element {
+function ThreadList (props: ThreadListProps) : JSX.Element {
+
+  function viewThread (n : number) : void {
+    props.updateThread(n);
+    props.updateViewingThread(true);
+  }
 
   const list = props.threads.map((thread, index) => {
     return (
       <ThreadEntry
         thread={thread}
-        changeThread={() => props.newThread(index)}
+        changeThread={() => viewThread(index)}
         key={index}
       />
     );
@@ -51,7 +62,7 @@ interface ThreadEntryProps {
   thread : Thread;
   changeThread : () => void;
 }
-function ThreadEntry(props: ThreadEntryProps) : JSX.Element {
+function ThreadEntry (props: ThreadEntryProps) : JSX.Element {
 
   return (
     <div className="threadEntry">
@@ -65,7 +76,7 @@ function ThreadEntry(props: ThreadEntryProps) : JSX.Element {
 
 }
 
-export function PageControl() : JSX.Element {
+export function PageControl () : JSX.Element {
   return (
     <div id="pageControl">
       <button type="button" id="pageBack">←</button>

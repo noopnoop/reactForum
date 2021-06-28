@@ -61,6 +61,10 @@ module.exports = {
         'beforeColon' : true,
         'afterColon' : true
       }
+    ],
+    'space-before-function-paren' : [
+      'warn',
     ]
+
   }
 };

@@ -7,75 +7,47 @@ import {
 } from 'react';
 import type { Thread } from './types';
 
-/*type HTMLChangeEventElement =
-    HTMLInputElement
-  | HTMLSelectElement
-  | HTMLTextAreaElement;
-
-// higher order component. used for any component with state
-// where we update the components state every time it is changed.
-  function StatefulInput<HTMLType extends HTMLChangeEventElement> (
-  updateState : Dispatch<SetStateAction<string>>,
-  element : HTMLType
-) {
-
-  function handleChange (e : ChangeEvent<HTMLType>) {
-    updateState(e.target.value);
-  }
-
-  element.onchange = handleChange;
-  } */
-
 interface InputContainerProps {
-  currentThread : number | null;
-  newThread : Dispatch<SetStateAction<number | null>>;
+  currentThread : number;
+  updateThread : Dispatch<SetStateAction<number>>;
   site : Thread[];
   updateSite : Dispatch<SetStateAction<Thread[]>>;
 }
-export function InputContainer(props : InputContainerProps) : JSX.Element {
+export function InputContainer (props : InputContainerProps) : JSX.Element {
 
-  const [messageInput, setMessageInput] =
+  const [content, setContent] =
     useState<string>('Enter your message here.');
-  const [nameInput, setNameInput] = useState<string>('Username');
-
-  function handleMessageChange (e : ChangeEvent<HTMLTextAreaElement>) {
-    setMessageInput(e.target.value);
-  }
-
-  function handleNameChange (e : ChangeEvent<HTMLInputElement>) {
-    setNameInput(e.target.value);
-  }
+  const [author, setAuthor] = useState<string>('Username');
 
   function handleSubmit () {
     const threadCopy = {
-      title : props.site[props.currentThread!].title,
-      replies : [...props.site[props.currentThread!].replies]
+      title : props.site[props.currentThread].title,
+      replies : [...props.site[props.currentThread].replies]
     };
     const siteCopy = [...props.site];
 
     const newMessage = {
-      author : nameInput,
-      content : messageInput
+      author : author,
+      content : content
     };
 
     threadCopy.replies.push(newMessage);
-    siteCopy.splice(props.currentThread!, 1);
+    siteCopy.splice(props.currentThread, 1);
     siteCopy.unshift(threadCopy);
     props.updateSite(siteCopy);
-    props.newThread(0);
+    props.updateThread(0);
   }
 
   return (
     <div id="inputContainer">
-      <input type="text"
-        onChange={handleNameChange}
-        id="nameEntry"
-        value="Username">
-      </input>
-      <textarea id="messageEntry"
-        onChange={handleMessageChange}>
-        Enter your message here.
-      </textarea>
+      <NameInput
+        author={author}
+        setAuthor={setAuthor}
+      />
+      <MessageInput
+        content={content}
+        setContent={setContent}
+      />
       <input type="button"
         id="messageSubmit"
         value="Submit"
@@ -84,3 +56,44 @@ export function InputContainer(props : InputContainerProps) : JSX.Element {
     </div>
   );
 }
+
+interface NameInputProps {
+  author : string;
+  setAuthor : Dispatch<SetStateAction<string>>;
+}
+function NameInput (props : NameInputProps) {
+
+  function onAuthorChanged (e : ChangeEvent<HTMLInputElement>) {
+    props.setAuthor(e.target.value);
+  }
+
+  return (
+    <input
+      type="text"
+      onChange={onAuthorChanged}
+      id="nameEntry"
+      value={props.author}
+    ></input>
+  );
+}
+
+
+interface MessageInputProps {
+  content : string;
+  setContent : Dispatch<SetStateAction<string>>;
+}
+function MessageInput (props : MessageInputProps) {
+
+  function onContentChanged (e : ChangeEvent<HTMLTextAreaElement>) {
+    props.setContent(e.target.value);
+  }
+
+  return (
+    <textarea
+      onChange={onContentChanged}
+      id="messageEntry"
+      value={props.content}
+    ></textarea>
+  );
+}
+

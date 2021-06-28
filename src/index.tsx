@@ -34,34 +34,31 @@ const testPage : Thread[] =
 interface AppProps {
   threads : Thread[]
 }
-function App(props: AppProps){
-  const [currentThread, newThread] = useState<number | null>(null);
+function App (props: AppProps){
+  const [viewingThread, updateViewingThread] = useState<boolean>(false);
+  const [currentThread, updateThread] = useState<number>(0);
   const [site, updateSite] = useState<Thread[]>(props.threads);
 
-  if (currentThread === null) {
+  if (!viewingThread) {
     return (
       <ThreadsContainer
         threads = {site}
-        newThread = {newThread}
+        updateThread = {updateThread}
+        updateViewingThread = {updateViewingThread}
       />
     );
   } else {
     return (
       <TopicContainer
         currentThread = {currentThread}
-        newThread = {newThread}
+        updateThread = {updateThread}
+        updateViewingThread = {updateViewingThread}
         site = {site}
         updateSite = {updateSite}
       />
     );
   }
 
-}
-
-function Test() {
-  return (
-    <h1>Howdy</h1>
-  );
 }
 
 render(
