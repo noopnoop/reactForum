@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { addMessage, updateThreads } from './pureFunctions';
 import {
   Dispatch,
   SetStateAction,
@@ -20,20 +21,17 @@ export function InputContainer (props : InputContainerProps) : JSX.Element {
   const [author, setAuthor] = useState<string>('Username');
 
   function handleSubmit () {
-    const threadCopy = {
-      title : props.site[props.currentThread].title,
-      replies : [...props.site[props.currentThread].replies]
-    };
-    const siteCopy = [...props.site];
-
     const newMessage = {
-      author : author,
-      content : content
+      content : content,
+      author : author
     };
+    let siteCopy = [...props.site];
 
-    threadCopy.replies.push(newMessage);
-    siteCopy.splice(props.currentThread, 1);
-    siteCopy.unshift(threadCopy);
+    siteCopy[props.currentThread] = addMessage(
+      siteCopy[props.currentThread],
+      newMessage
+    );
+    siteCopy = updateThreads(siteCopy, props.currentThread);
     props.updateSite(siteCopy);
     props.updateThread(0);
   }
