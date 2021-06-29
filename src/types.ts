@@ -7,3 +7,7 @@ export interface Thread {
   title: string;
   replies: Message[];
 }
+
+export type Mode = 'browse'
+                 | 'viewThread'
+                 | 'newThread'

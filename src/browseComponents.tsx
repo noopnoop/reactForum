@@ -1,22 +1,24 @@
 import * as React from 'react';
 import { Dispatch, SetStateAction } from 'react';
-import { Thread } from './types';
+import { Thread, Mode } from './types';
 
 interface ThreadsContainerProps {
   threads : Thread[];
   updateThread : Dispatch<SetStateAction<number>>;
-  updateViewingThread : Dispatch<SetStateAction<boolean>>;
+  setMode : Dispatch<SetStateAction<Mode>>;
 }
 export function ThreadsContainer (props : ThreadsContainerProps) : JSX.Element {
   return (
     <div id="threadsContainer">
+      <NewThreadBanner
+        setMode={props.setMode}
+      />
       <ThreadKey/>
       <ThreadList
         threads={props.threads}
         updateThread={props.updateThread}
-        updateViewingThread={props.updateViewingThread}
+        setMode={props.setMode}
       />
-      <PageControl/>
     </div>
   );
 }
@@ -32,13 +34,13 @@ function ThreadKey () : JSX.Element {
 interface ThreadListProps {
   threads : Thread[];
   updateThread : Dispatch<SetStateAction<number>>;
-  updateViewingThread : Dispatch<SetStateAction<boolean>>;
+  setMode : Dispatch<SetStateAction<Mode>>;
 }
 function ThreadList (props: ThreadListProps) : JSX.Element {
 
   function viewThread (n : number) : void {
     props.updateThread(n);
-    props.updateViewingThread(true);
+    props.setMode('viewThread');
   }
 
   const list = props.threads.map((thread, index) => {
@@ -76,11 +78,19 @@ function ThreadEntry (props: ThreadEntryProps) : JSX.Element {
 
 }
 
-export function PageControl () : JSX.Element {
+interface NewThreadBannerProps {
+  setMode : Dispatch<SetStateAction<Mode>>;
+}
+function NewThreadBanner (props : NewThreadBannerProps) {
+
+  function clicked () : void {
+    props.setMode('newThread');
+  }
+
   return (
-    <div id="pageControl">
-      <button type="button" id="pageBack">←</button>
-      <p id="pageNumber">fixme</p>
-      <button type="button" id="pageForward">→</button>
-    </div> );
+    <div id="newThreadBanner">
+      <div id="newThreadButton" onClick={clicked}>+</div>
+      <div id="ugh">a</div>
+    </div>
+  );
 }

@@ -51,7 +51,6 @@ h1 {
 }
 
 .threadName {
-  cursor: pointer;
   float: left;
 }
 
@@ -117,7 +116,29 @@ h1 {
   float: left;
   font-size: 44px;
   color: gainsboro;
-  cursor: pointer;
+}
+
+#newThreadBanner {
+  margin-bottom: 4px;
+  background-color: gray;
+  color: gray;
+  padding: 8px;
+  text-align: left;
+}
+
+#newThreadButton {
+  margin-left: 16px;
+  float: left;
+  font-size: 44px;
+  color: gainsboro;
+}
+
+#ugh {
+  margin: 4px;
+  background-color: gray;
+  font-size: 24px;
+  padding: 8px;
+  text-align: center;
 }
 
 #inputContainer {

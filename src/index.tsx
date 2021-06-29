@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { useState } from 'react';
 import { render } from 'react-dom';
-import type { Thread } from './types';
+import type { Thread, Mode } from './types';
 import { ThreadsContainer } from './browseComponents';
 import { TopicContainer } from './threadComponents';
+import { NewThreadContainer } from './newThreadComponents';
 
 const testPage : Thread[] =
   [
@@ -35,30 +36,37 @@ interface AppProps {
   threads : Thread[]
 }
 function App (props: AppProps){
-  const [viewingThread, updateViewingThread] = useState<boolean>(false);
+  const [mode, setMode] = useState<Mode>('browse');
   const [currentThread, updateThread] = useState<number>(0);
   const [site, updateSite] = useState<Thread[]>(props.threads);
 
-  if (!viewingThread) {
+  if (mode === 'browse') {
     return (
       <ThreadsContainer
         threads = {site}
         updateThread = {updateThread}
-        updateViewingThread = {updateViewingThread}
+        setMode = {setMode}
       />
     );
-  } else {
+  } else if (mode === 'viewThread') {
     return (
       <TopicContainer
         currentThread = {currentThread}
         updateThread = {updateThread}
-        updateViewingThread = {updateViewingThread}
+        setMode = {setMode}
         site = {site}
         updateSite = {updateSite}
       />
     );
+  } else {
+    return (
+      <NewThreadContainer
+        site = {site}
+        updateSite = {updateSite}
+        setMode = {setMode}
+      />
+    );
   }
-
 }
 
 render(

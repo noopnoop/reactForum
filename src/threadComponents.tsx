@@ -1,5 +1,5 @@
 import * as React from 'react';
-import type { Thread, Message } from './types';
+import type { Thread, Message, Mode } from './types';
 import {
   Dispatch,
   SetStateAction,
@@ -11,7 +11,7 @@ interface TopicContainerProps {
   updateThread : Dispatch<SetStateAction<number>>;
   site : Thread[];
   updateSite : Dispatch<SetStateAction<Thread[]>>;
-  updateViewingThread : Dispatch<SetStateAction<boolean>>;
+  setMode : Dispatch<SetStateAction<Mode>>;
 }
 export function TopicContainer (props: TopicContainerProps) : JSX.Element {
 
@@ -21,7 +21,7 @@ export function TopicContainer (props: TopicContainerProps) : JSX.Element {
     <div id="topicContainer">
       <TitleContainer
         title={thread.title}
-        updateViewingThread={props.updateViewingThread}
+        setMode={props.setMode}
       />
       <MessageList messages={thread.replies}/>
       <InputContainer
@@ -36,12 +36,12 @@ export function TopicContainer (props: TopicContainerProps) : JSX.Element {
 
 interface TitleContainerProps {
   title : string;
-  updateViewingThread : Dispatch<SetStateAction<boolean>>;
+  setMode : Dispatch<SetStateAction<Mode>>;
 }
 function TitleContainer (props: TitleContainerProps){
 
   function goBack () {
-    props.updateViewingThread(false);
+    props.setMode('browse');
   }
 
   return(
