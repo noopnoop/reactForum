@@ -59,7 +59,7 @@ interface NameInputProps {
   author : string;
   setAuthor : Dispatch<SetStateAction<string>>;
 }
-function NameInput (props : NameInputProps) {
+export function NameInput (props : NameInputProps) : JSX.Element {
 
   function onAuthorChanged (e : ChangeEvent<HTMLInputElement>) {
     props.setAuthor(e.target.value);
@@ -80,7 +80,7 @@ interface MessageInputProps {
   content : string;
   setContent : Dispatch<SetStateAction<string>>;
 }
-function MessageInput (props : MessageInputProps) {
+export function MessageInput (props : MessageInputProps) : JSX.Element {
 
   function onContentChanged (e : ChangeEvent<HTMLTextAreaElement>) {
     props.setContent(e.target.value);

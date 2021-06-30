@@ -64,6 +64,7 @@ function App (props: AppProps){
         site = {site}
         updateSite = {updateSite}
         setMode = {setMode}
+        updateThread = {updateThread}
       />
     );
   }
