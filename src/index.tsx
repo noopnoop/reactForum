@@ -9,27 +9,18 @@ import { NewThreadContainer } from './newThreadComponents';
 const testPage : Thread[] =
   [
     {
-      title : 'down with bogus buchs',
+      title : 'Test Thread',
       replies : [
         {
-          author : 'swag',
-          content : 'i am so sick of freaking bogus buchs'
+          author : 'User1',
+          content : 'Here is the original post.'
         },
         {
-          author : 'swag2',
-          content : 'me too bro'
+          author : 'User2',
+          content : 'Here is a reply.'
         }
       ]
     },
-    {
-      title : 'i kind of like bogus bucks actually',
-      replies : [
-        {
-          author : 'joeBiden',
-          content : 'you know what i mean haha',
-        }
-      ]
-    }
   ];
 
 interface AppProps {
